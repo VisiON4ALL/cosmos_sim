@@ -3,7 +3,7 @@ import numpy as np
 import taichi as ti
 from objects.spaceObject import SpaceObject
 from objects.planet import Planet
-from taichi_kernels.render import make_chunks, fill_image, update_positions
+from taichi_kernels.render import make_chunks, fill_image, update_positions, clear_image
 from config import G, v_max
 
 ti.init(arch=ti.cpu)
@@ -28,6 +28,7 @@ gui = ti.GUI("Taichi Planets", (width, height))
 while gui.running:
     make_chunks(centers, chunks, n_circles)
     update_positions(centers, n_circles, width, height)
+    clear_image(gray_scalar_img)
     fill_image(centers, chunks, gray_scalar_img, n_circles)
     gui.set_image(gray_scalar_img)
     gui.show()

@@ -45,3 +45,7 @@ def update_positions(centers: ti.template(), n: ti.i32, width: ti.i32, height: t
         elif centers[i][1] + centers[i][2] > height:
             centers[i][1] = height-centers[i][2]
             centers[i][5] *= -1
+@ti.kernel
+def clear_image(img:ti.template()):
+    for i,j in img:
+        img[i,j] = 0.0
