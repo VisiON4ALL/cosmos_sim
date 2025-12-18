@@ -22,3 +22,26 @@ def fill_image(centers: ti.template(), chunks: ti.template(), gray_scalar_img: t
             for j in range(int(chunks[k].y), int(chunks[k].w)):
                 if is_inside_circle(i, j, centers[k]):
                     gray_scalar_img[i, j] = 1.0
+
+@ti.kernel
+def update_positions(centers: ti.template(), n: ti.i32, width: ti.i32, height: ti.i32):
+    for i in range(n):
+        centers[i][0] += centers[i][4]  # x += vx
+        centers[i][1] += centers[i][5]  # y += vy
+
+        # проверяем ось X на границы
+        if centers[i][0] - centers[i][2] < 0:
+            centers[i][0] = centers[i][2]
+            centers[i][4] *= -1
+
+        elif centers[i][0] + centers[i][2] > width:
+            centers[i][0] = width-centers[i][2]
+            centers[i][4] *= -1
+
+        # проверяем по y на границе
+        if centers[i][1] - centers[i][2] < 0:
+            centers[i][1] = centers[i][2]
+            centers[i][5] *= -1
+        elif centers[i][1] + centers[i][2] > height:
+            centers[i][1] = height-centers[i][2]
+            centers[i][5] *= -1

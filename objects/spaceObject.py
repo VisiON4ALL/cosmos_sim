@@ -21,4 +21,4 @@ class SpaceObject:
            Возвращает параметры в виде списка или вектора,
            чтобы их можно было передать в Taichi поле.
         """
-        return [self.x, self.y, self.r, self.m, self.v, self.vx, self.vy]
+        return [self.x, self.y, self.r, self.m, self.vx, self.vy]
